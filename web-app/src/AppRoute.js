@@ -6,6 +6,7 @@ import {
 
 import Home from './pages/home';
 import Menu from './pages/menu';
+import Application from './pages/application';
 import CheckStatus from './pages/check-status';
 
 const AppRoute = () => {
@@ -20,6 +21,9 @@ const AppRoute = () => {
         </Route>
         <Route path="/check-status">
           <CheckStatus />
+        </Route>
+        <Route path="/application">
+          <Application />
         </Route>
       </Switch>
     </Router>
