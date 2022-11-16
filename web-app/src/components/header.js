@@ -3,14 +3,20 @@ import { Container, Row } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 
 const Header = () => {
-    const { state, signOut, signIn } = useAuthContext();
+    const { signOut, signIn , isAuthenticated } = useAuthContext();
+    let isAuth = false;
+
+    isAuthenticated().then((result) => {
+        isAuth = result;
+    }).catch((error) => {
+        console.log(error);
+    })
 
     return (
-        <Container fluid>
-            <Row>
-                <h1 className="text-center">Grama check!</h1>
+        <Container fluid className="my-3">
+            <Row className="justify-content-end">
                 {
-                    state.isAuthenticated ?
+                    isAuth ?
                         <Button variant="outlined" size="small" sx={{ width: 100, }} onClick={() => signOut()}>Logout</Button> 
                         : <Button variant="contained" size="small" sx={{ width: 100, }} onClick={() => signIn()}>Login</Button>
                 }
