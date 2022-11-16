@@ -16,4 +16,6 @@ COPY . .
 # Set a non-root user
 USER 10014
 
-CMD [ "node", "index.mjs" ]
+EXPOSE 8080
+
+CMD [ "node", "index.js" ]

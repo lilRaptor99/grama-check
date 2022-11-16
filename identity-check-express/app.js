@@ -5,7 +5,7 @@ import swaggerFile from "./openapi.json" assert { type: "json" };
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const citizenData = [
   { id: "992383845V", first_name: "Pratheek", middle_names: "", last_name: "Senevirathne", dob: "1999-08-26", gender: "M", address: "200/4, 1st Lane, Rajagiriya" },
