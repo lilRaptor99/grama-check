@@ -1,6 +1,6 @@
-import swaggerAutogen from 'swagger-autogen'
+import swaggerAutogen from 'swagger-autogen';
 
-const outputFile = './openapi.json'
-const endpointsFiles = ['./app.js']
+const outputFile = './openapi.json';
+const endpointsFiles = ['./app.js'];
 
-swaggerAutogen(outputFile, endpointsFiles)
+swaggerAutogen(outputFile, endpointsFiles);
