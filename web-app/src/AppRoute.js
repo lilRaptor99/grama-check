@@ -3,16 +3,16 @@ import {
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 import Home from './pages/home';
 import Login from './pages/login';
 import Menu from './pages/menu';
 import CheckStatus from './pages/check-status';
 import ErrorPage from './pages/error-page';
-import Application from "./pages/application";
+import Application from './pages/application';
 
-import { AuthenticatedComponent, useAuthContext } from "@asgardeo/auth-react";
+import { AuthenticatedComponent, useAuthContext } from '@asgardeo/auth-react';
 
 const isAuthenticated = () => {
   const token = localStorage.getItem('token');
@@ -27,19 +27,19 @@ const isAuthenticated = () => {
   // }
   if (token) return true;
   return false;
-}
+};
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         isAuthenticated() ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
-              pathname: "/",
+              pathname: '/',
             }}
           />
         )
@@ -58,17 +58,17 @@ const AppRoute = () => {
           <Home />
         </Route>
         <Route path="/menu">
-          <AuthenticatedComponent fallback={<Login />} >
+          <AuthenticatedComponent fallback={<Login />}>
             <Menu />
           </AuthenticatedComponent>
         </Route>
         <Route path="/apply">
-          <AuthenticatedComponent fallback={<Login />} >
+          <AuthenticatedComponent fallback={<Login />}>
             <Application />
           </AuthenticatedComponent>
         </Route>
         <Route path="/check-status">
-          <AuthenticatedComponent fallback={<Login />} >
+          <AuthenticatedComponent fallback={<Login />}>
             <CheckStatus />
           </AuthenticatedComponent>
         </Route>
@@ -78,6 +78,6 @@ const AppRoute = () => {
       </Switch>
     </Router>
   );
-}
+};
 
 export default AppRoute;
