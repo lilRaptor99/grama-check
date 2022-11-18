@@ -1,9 +1,8 @@
-import { useRouteError } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Container, Row } from 'react-bootstrap';
 
 const ErrorPage = () => {
-    const error = useRouteError();
-    console.error(error);
+    let location = useLocation();
 
     return (
         <Container id="error-page" className="text-center mt-4">
@@ -15,7 +14,7 @@ const ErrorPage = () => {
             </Row>
             <Row>
                 <p>
-                    <i>{error.statusText || error.message}</i>
+                    No match for <code>{location.pathname}</code>
                 </p>
             </Row>
         </Container>
