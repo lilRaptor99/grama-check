@@ -28,3 +28,14 @@ code {
     z-index: 10;
   }
 }
+
+.head-login {
+  display: flex;
+  justify-content: flex-end;
+
+  .head-login-btn {
+    height: fit-content;
+    align-self: center;
+  }
+}
+
