@@ -1,9 +1,9 @@
 const config = {
-    signInRedirectURL: "https://localhost:3000/menu",
-    signOutRedirectURL: "https://localhost:3000",
-    clientID: "kPd7Cg_4E8hxkmqL0xNnHCoLxh8a",
-    baseUrl: "https://api.asgardeo.io/t/azma",
-    scope: ["openid", "profile"]
+  signInRedirectURL: `${process.env.REACT_APP_WEB_URL}/menu`,
+  signOutRedirectURL: process.env.REACT_APP_WEB_URL,
+  clientID: process.env.REACT_APP_ASGARDEO_CLIENT_ID,
+  baseUrl: process.env.REACT_APP_ASGARDEO_BASE_URL,
+  scope: ['openid', 'profile'],
 };
 
 export default config;
