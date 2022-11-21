@@ -19,7 +19,7 @@ const Menu = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [state.isAuthenticated]);
+  }, [getIDToken, state, state?.isAuthenticated]);
 
   return (
     <Container>

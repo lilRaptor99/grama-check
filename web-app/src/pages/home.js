@@ -1,4 +1,4 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import React, { useState } from 'react';
 import { useAuthContext } from '@asgardeo/auth-react';
 import Button from '@mui/material/Button';

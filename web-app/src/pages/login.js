@@ -1,4 +1,4 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import React from 'react';
 import { useAuthContext } from '@asgardeo/auth-react';
 import Button from '@mui/material/Button';
@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 // import { handleLogin } from '../services/auth';
 
 const Login = () => {
-  const { state, signIn, signOut } = useAuthContext();
+  const { signIn } = useAuthContext();
   const handleLogin = () => {
     signIn();
   };

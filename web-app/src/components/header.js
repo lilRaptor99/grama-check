@@ -23,7 +23,7 @@ const Header = () => {
     <Container fluid className="mb-3">
       <Row>
         <Col sm={3}>
-          <img src={Logo} style={{ width: 200 }} />
+          <img src={Logo} alt="logo" style={{ width: 200 }} />
         </Col>
         <Col sm={9} className="head-login">
           <Row className="head-login-btn">
