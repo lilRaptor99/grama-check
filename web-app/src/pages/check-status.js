@@ -18,7 +18,7 @@ export default function CheckStatus() {
         <h3 className="">The status of your application is </h3>
       </Row>
       <Row>
-        <h2 className="text-center">Pending</h2>
+        <h2 style={{color:"#1E88E5"}} className="text-center">Pending</h2>
       </Row>
     </Container>
   );

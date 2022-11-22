@@ -11,7 +11,6 @@ import Menu from './pages/menu';
 import Application from './pages/application';
 import CheckStatus from './pages/check-status';
 import ErrorPage from './pages/error-page';
-import Application from "./pages/application";
 
 import { AuthenticatedComponent, useAuthContext } from "@asgardeo/auth-react";
 
@@ -63,7 +62,7 @@ const AppRoute = () => {
             <Menu />
           </AuthenticatedComponent>
         </Route>
-        <Route path="/apply">
+        <Route path="/application">
           <AuthenticatedComponent fallback={<Login />} >
             <Application />
           </AuthenticatedComponent>
@@ -76,9 +75,9 @@ const AppRoute = () => {
         <Route path="*">
           <ErrorPage />
         </Route>
-        <Route path="/application">
+        {/* <Route path="/application">
           <Application />
-        </Route>
+        </Route> */}
       </Switch>
     </Router>
   );

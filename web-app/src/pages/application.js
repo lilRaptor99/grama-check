@@ -22,24 +22,9 @@ export default function Application() {
 //   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            component="form"
-            //onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <h5 style={{color: "#1783ad"}}>Apply for Grama Check</h5>
+    <body>
+      <Container  maxWidth="xs">
+            <h5 style={{color: "#42A5F5"}}>Apply for Grama Check</h5>
             <TextField
               margin="normal"
               required
@@ -72,9 +57,7 @@ export default function Application() {
             >
               submit
             </Button>
-          </Box>
-        </Box>
       </Container>
-    </ThemeProvider>
+      </body>
   );
 }
