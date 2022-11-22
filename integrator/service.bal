@@ -35,6 +35,10 @@ service / on new http:Listener(8090) {
         return resp;
     }
 
+    resource isolated function get helloo() returns string {
+        return "Helloo";
+    }
+
     resource isolated function get policeReport/all() returns PoliceReport[]|error? {
         io:println("GET all police reports");
         stream<PoliceReport, error?> resultStream = db:db->query(`SELECT * FROM gramadb.police_report
