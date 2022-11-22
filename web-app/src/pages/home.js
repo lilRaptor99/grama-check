@@ -14,7 +14,7 @@ const Home = () => {
 
   const handlLogout = () => {
     signOut();
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setToken(null);
   };
 
