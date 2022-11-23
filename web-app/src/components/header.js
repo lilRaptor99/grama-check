@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { useAuthContext } from "@asgardeo/auth-react";
-import { Container, Row, Col } from "react-bootstrap";
-import Logo from "../assets/images/logo.png";
-import "../assets/styles/index.scss";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import React, { useState } from 'react';
+import { useAuthContext } from '@asgardeo/auth-react';
+import { Container, Row, Col } from 'react-bootstrap';
+import Logo from '../assets/images/logo.png';
+import '../assets/styles/index.scss';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const { state, signIn, signOut } = useAuthContext();
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
 
   const handlLogout = () => {
     signOut();
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setToken(null);
   };
 
@@ -22,29 +22,54 @@ const Header = () => {
   };
 
   return (
-    
     <Container fluid className="mb-1 head-body">
       <Row>
         <Col sm={3}>
-          <img src={Logo} style={{ width: 140 }} />
+          <img src={Logo} style={{ width: 140 }} alt="logo" />
         </Col>
-        <Col sm={6} className="d-flex align-items-center">
-          <Row>
-            <div>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                <Typography sx={{ minWidth: 210 }}>Apply for Certificate</Typography>
-                <Typography sx={{ minWidth: 100 }}>Check Status</Typography>
-                <Typography sx={{ minWidth: 100 }}>Help</Typography>
-              </Box>
-            </div>
-          </Row>
+
+        <Col
+          sm={6}
+          className="d-flex align-items-center justify-content-center head-nav"
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+          >
+            <NavLink
+              to="/home"
+              activeStyle={{ color: '#1E88E5' }}
+              className="p-2 link"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/application"
+              activeStyle={{ color: '#1E88E5' }}
+              className="p-2 link"
+            >
+              Apply for Certificate
+            </NavLink>
+            <NavLink
+              to="/check-status"
+              activeStyle={{ color: '#1E88E5' }}
+              className="p-2 link"
+            >
+              Check Status
+            </NavLink>
+            <NavLink
+              to="/help"
+              activeStyle={{ color: '#1E88E5' }}
+              className="p-2 link"
+            >
+              Help
+            </NavLink>
+          </Box>
         </Col>
+
         <Col sm={3} className="head-login">
           <Row className="head-login-btn">
             {token || state?.isAuthenticated ? (

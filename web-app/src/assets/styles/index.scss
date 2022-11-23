@@ -6,12 +6,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- 
 }
 
-.head-body{
-  background-color: #f8fafa;
+.head-body {
   padding: 0.5rem calc((100vw - 1200px) / 2);
+  height: fit-content;
+}
+
+.page-body {
+  padding: 1rem calc((100vw - 1200px) / 2);
 }
 
 code {
@@ -53,12 +56,19 @@ code {
   flex-direction: column;
   justify-content: end;
   margin-bottom: 2rem;
-  
+
   Button {
     margin-left: 10px;
   }
 
   p {
-    font-size:20px;
+    font-size: 20px;
+  }
+}
+
+.head-nav {
+  .link {
+    text-decoration: none;
+    color: black;
   }
 }
