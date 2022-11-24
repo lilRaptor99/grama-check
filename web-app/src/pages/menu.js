@@ -1,26 +1,8 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
-import { useAuthContext } from '@asgardeo/auth-react';
 
 const Menu = () => {
-  const { state, getIDToken } = useAuthContext();
-
-  useEffect(() => {
-    if (!state?.isAuthenticated) {
-      return;
-    }
-    console.log(state);
-
-    getIDToken()
-      .then((idToken) => {
-        localStorage.setItem('token', JSON.stringify(idToken));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [getIDToken, state, state?.isAuthenticated]);
-
   return (
     <Container>
       <Row className="text-center mb-4">
