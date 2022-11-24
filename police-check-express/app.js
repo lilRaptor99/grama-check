@@ -15,7 +15,8 @@ const citizenData = [
     dob: '1999-08-26',
     gender: 'M',
     address: '200/4, 1st Lane, Rajagiriya',
-    criminalCaseExist: true,
+    criminalCaseExist: false,
+    criminalCaseRecord: '',
   },
   {
     id: '990012912V',
@@ -25,6 +26,7 @@ const citizenData = [
     gender: 'F',
     address: '587 Prairieview Plaza',
     criminalCaseExist: true,
+    criminalCaseRecord: 'Some criminal activity...',
   },
   {
     id: '995619139V',
@@ -34,6 +36,7 @@ const citizenData = [
     gender: 'F',
     address: '4 Ramsey Circle',
     criminalCaseExist: false,
+    criminalCaseRecord: '',
   },
   {
     id: '992939283V',
@@ -43,6 +46,7 @@ const citizenData = [
     gender: 'M',
     address: '38712 Northfield Park',
     criminalCaseExist: true,
+    criminalCaseRecord: 'Some criminal activity...',
   },
   {
     id: '994789346V',
@@ -52,6 +56,7 @@ const citizenData = [
     gender: 'F',
     address: '8 Cordelia Lane',
     criminalCaseExist: false,
+    criminalCaseRecord: '',
   },
   {
     id: '991777277V',
@@ -61,28 +66,26 @@ const citizenData = [
     gender: 'M',
     address: '3 Algoma Way',
     criminalCaseExist: false,
+    criminalCaseRecord: '',
   },
 ];
 
-app.get('/api/citizens', (_, res) => {
+app.get('/api/policeRecords', (_, res) => {
   return res.json(citizenData);
 });
 
-app.get('/api/citizen/:id', (req, res) => {
+app.get('/api/policeRecord/:id', (req, res) => {
   const id = req.params.id;
   if (!id || typeof id !== 'string') {
     return res.status(400).json({ error: 'Missing or invalid id' });
-  } else {
-    const isCriminalCitizen = citizenData.find(
-      (c) => c.criminalCaseExist === true
-    );
-
-    if (isCriminalCitizen) {
-      return res.json('The user has a criminal case');
-    } else {
-      return res.json('No criminal case under this user');
-    }
   }
+
+  const citizen = citizenData.find((c) => c.id === id);
+
+  if (!citizen) {
+    return res.status(404).json({ error: 'Police record not found' });
+  }
+  return res.json(citizen);
 });
 
 app.get('/', (_, res) => {

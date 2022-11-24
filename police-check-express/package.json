@@ -1,7 +1,7 @@
 {
-  "name": "identity-check-express",
+  "name": "police-check-express",
   "version": "1.0.0",
-  "description": "Identity Check - nodejs REST API",
+  "description": "police Check - nodejs REST API",
   "main": "index.js",
   "type": "module",
   "scripts": {

@@ -2,7 +2,7 @@
 
 #### Use the following build config when creating this component in Choreo:
 
-- Dockerfile: `identity-check-express/Dockerfile`
-- Docker context: `identity-check-express/`
+- Dockerfile: `police-check-express/Dockerfile`
+- Docker context: `police-check-express/`
 - Port: `8080` (or set env var `PORT`)
-- OpenAPI filepath: `identity-check-express/openapi.json`
+- OpenAPI filepath: `police-check-express/openapi.json`
