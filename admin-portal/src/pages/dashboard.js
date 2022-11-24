@@ -1,7 +1,26 @@
 import { Container, Row } from 'react-bootstrap';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { handleTokenExchange } from '../services/auth';
+import { useAuthContext } from '@asgardeo/auth-react';
 
 const Dashboard = () => {
+  const { state, getIDToken } = useAuthContext();
+
+  useEffect(() => {
+    if (!state?.isAuthenticated) {
+      return;
+    }
+
+    getIDToken()
+      .then((idToken) => {
+        console.log(idToken);
+        handleTokenExchange(idToken);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [getIDToken, state, state?.isAuthenticated]);
+
   return (
     <Container>
       <Row>

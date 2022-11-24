@@ -1,5 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAuthContext } from '@asgardeo/auth-react';
 import HomeImg from '../assets/images/Home.png';
 import { handleTokenExchange } from '../services/auth';

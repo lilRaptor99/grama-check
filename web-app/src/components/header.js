@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuthContext } from '@asgardeo/auth-react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Logo from '../assets/images/logo.png';
