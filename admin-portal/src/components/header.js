@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuthContext } from '@asgardeo/auth-react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Logo from '../assets/images/logo.png';
@@ -9,10 +9,12 @@ import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const { state, signIn, signOut } = useAuthContext();
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
 
   const handlLogout = () => {
     signOut();
-    localStorage.clear();
+    localStorage.removeItem('token');
+    setToken(null);
   };
 
   const handleLogin = () => {
@@ -45,18 +47,11 @@ const Header = () => {
               Home
             </NavLink>
             <NavLink
-              to="/application"
+              to="/dashboard"
               activeStyle={{ color: '#1E88E5' }}
               className="p-2 link"
             >
-              Apply for Certificate
-            </NavLink>
-            <NavLink
-              to="/check-status"
-              activeStyle={{ color: '#1E88E5' }}
-              className="p-2 link"
-            >
-              Check Status
+              Dashboard
             </NavLink>
             <NavLink
               to="/help"
@@ -70,7 +65,7 @@ const Header = () => {
 
         <Col sm={3} className="head-login">
           <Row className="head-login-btn">
-            {state?.isAuthenticated ? (
+            {token || state?.isAuthenticated ? (
               <Button
                 variant="outlined"
                 size="small"
