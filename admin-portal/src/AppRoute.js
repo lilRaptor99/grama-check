@@ -21,9 +21,9 @@ const AppRoute = () => {
           </AuthenticatedComponent>
         </Route>
         <Route path="/dashboard">
-          {/* <AuthenticatedComponent fallback={<Login />}> */}
-          <Dashboard />
-          {/* </AuthenticatedComponent> */}
+          <AuthenticatedComponent fallback={<Login />}>
+            <Dashboard />
+          </AuthenticatedComponent>
         </Route>
         <Route path="*">
           <ErrorPage />
