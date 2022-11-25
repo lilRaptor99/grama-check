@@ -2,24 +2,33 @@ import { Container, Row, Col } from 'react-bootstrap';
 import React, { useEffect } from 'react';
 import { useAuthContext } from '@asgardeo/auth-react';
 import HomeImg from '../assets/images/Home.png';
+import { handleTokenExchange } from '../services/auth';
+// import { getAllPoliceRecords } from '../services/police-check';
 
 const Home = () => {
   const { state, getIDToken } = useAuthContext();
+  // const [policeReports, setPoliceReports] = useState(null);
 
   useEffect(() => {
     if (!state?.isAuthenticated) {
       return;
     }
-    console.log(state);
 
     getIDToken()
       .then((idToken) => {
-        localStorage.setItem('token', JSON.stringify(idToken));
+        handleTokenExchange(idToken);
+        // getAllPoliceReports();
       })
       .catch((error) => {
         console.log(error);
       });
   }, [getIDToken, state, state?.isAuthenticated]);
+
+  // const getAllPoliceReports = async () => {
+  //   const result = await getAllPoliceRecords();
+  //   setPoliceReports(result);
+  //   console.log(policeReports);
+  // };
 
   return (
     <Container fluid className={'no-gutters mx-0 px-0'}>
