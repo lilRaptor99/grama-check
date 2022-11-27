@@ -1,18 +1,27 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Container, Grid } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
+import Axios from 'axios';
 
 export default function Application() {
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     console.log({
-  //       email: data.get("email"),
-  //       password: data.get("password"),
-  //     });
-  //   };
+  const [imageSelected, setImageSelected] = useState();
+  const [imageName, setImageName] = useState('Please upload proof for address');
+
+  const uploadImage = (files) => {
+    const formData = new FormData();
+    formData.append('file', imageSelected);
+    formData.append('upload_preset', 'h3puqjru');
+
+    Axios.post(
+      'https://api.cloudinary.com/v1_1/dfgk4vgol/image/upload',
+      formData
+    ).then((response) => {
+      console.log(response);
+    });
+  };
 
   return (
     <body>
@@ -48,7 +57,7 @@ export default function Application() {
             />
           </Grid>
           <Grid item xs={12}>
-            <text>Please upload proof for address</text>
+            <text>{imageName}</text>
             <Button
               variant="outlined"
               component="label"
@@ -56,7 +65,16 @@ export default function Application() {
               style={{ float: 'right' }}
             >
               Upload
-              <input hidden accept="image/*" multiple type="file" />
+              <input
+                hidden
+                accept="image/*"
+                multiple
+                type="file"
+                onChange={(event) => {
+                  setImageSelected(event.target.files[0]);
+                  setImageName(event.target.files[0].name);
+                }}
+              />
             </Button>
           </Grid>
         </Grid>
@@ -65,6 +83,7 @@ export default function Application() {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          onClick={uploadImage}
         >
           submit
         </Button>
