@@ -9,7 +9,7 @@
   "basePath": "/",
   "schemes": ["http"],
   "paths": {
-    "/api/citizens": {
+    "/api/policeRecords": {
       "get": {
         "description": "",
         "parameters": [],
@@ -20,7 +20,7 @@
         }
       }
     },
-    "/api/citizen/{id}": {
+    "/api/policeRecord/{id}": {
       "get": {
         "description": "",
         "parameters": [
