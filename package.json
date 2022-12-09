@@ -1,6 +1,7 @@
 {
   "private": true,
   "devDependencies": {
+    "@babel/core": "^7.20.2",
     "@babel/eslint-parser": "^7.19.1",
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "babel-eslint": "^10.1.0",
