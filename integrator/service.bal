@@ -87,7 +87,7 @@ service class RequestAuthInterceptor {
 service / on new http:Listener(8090) {
 
     // Check service health on microservices
-    resource isolated function get health() returns json|error {
+    resource isolated function get serviceHealth() returns json|error {
         io:println("GET service health");
 
         worker WaddressCheckStatus returns json|error {
@@ -176,6 +176,43 @@ service / on new http:Listener(8090) {
 
         return storedReport;
     }
+
+    resource isolated function post acceptReport/[string policeReportId]() returns PoliceReport|error? {
+        io:println("POST accept police report: ", policeReportId);
+
+        _ = check db:db->execute(`UPDATE gramadb.police_report 
+                                        SET address_check_status = "APPROVED" 
+                                        WHERE police_report_id = ${policeReportId};`);
+
+        PoliceReport storedReport = check db:db->queryRow(`SELECT * FROM gramadb.police_report 
+                                                        WHERE police_report_id = ${policeReportId};`);
+
+        return storedReport;
+    }
+
+    resource isolated function post rejectReport/[string policeReportId]() returns PoliceReport|error? {
+        io:println("POST accept police report: ", policeReportId);
+
+        _ = check db:db->execute(`UPDATE gramadb.police_report 
+                                        SET address_check_status = "REJECTED"  
+                                        WHERE police_report_id = ${policeReportId};`);
+
+        PoliceReport storedReport = check db:db->queryRow(`SELECT * FROM gramadb.police_report 
+                                                        WHERE police_report_id = ${policeReportId};`);
+
+        return storedReport;
+    }
+
+    resource isolated function post reCheckPoliceReportStatus/[string policeReportId]() returns json|error? {
+        io:println("POST reCheck Police Report Status: ", policeReportId);
+
+        PoliceReport storedReport = check db:db->queryRow(`SELECT * FROM gramadb.police_report 
+                                                        WHERE police_report_id = ${policeReportId};`);
+        _ = start updatePoliceReportStatus(policeReportId, storedReport.id_number);
+
+        return {"status": "Recheck started"};
+    }
+
 }
 
 // Check police report status
@@ -197,9 +234,16 @@ isolated function updatePoliceReportStatus(string policeReportId, string id_numb
 
         _ = check slackClient->postMessage(messageParams);
 
-        _ = check db:db->execute(`UPDATE gramadb.police_report 
-                            SET id_check_status = "REJECTED" 
-                            WHERE police_report_id = ${policeReportId};`);
+        if (identityCheckResponse is http:ClientError) {
+            _ = check db:db->execute(`UPDATE gramadb.police_report 
+                                        SET id_check_status = "REJECTED" 
+                                        WHERE police_report_id = ${policeReportId};`);
+        } else {
+            _ = check db:db->execute(`UPDATE gramadb.police_report 
+                                        SET id_check_status = "SYSTEM_ERROR" 
+                                        WHERE police_report_id = ${policeReportId};`);
+        }
+
     }
     else {
         io:println("Identity check response: ", identityCheckResponse);
