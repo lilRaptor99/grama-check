@@ -1,21 +1,39 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Container, Grid, Box } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 import { submitApplication } from '../services/application.js';
+import Axios from 'axios';
 
 export default function Application() {
+  const [imageSelected, setImageSelected] = useState();
+  const [imageName, setImageName] = useState('Please upload proof for address');
+
+  const uploadImage = (files) => {
+    const formData = new FormData();
+    formData.append('file', imageSelected);
+    formData.append('upload_preset', 'h3puqjru');
+
+    Axios.post(
+      'https://api.cloudinary.com/v1_1/dfgk4vgol/image/upload',
+      formData
+    ).then((response) => {
+      console.log(response);
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const formData1 = new FormData(event.currentTarget);
     const data = {
-      fname: formData.get('fname'),
-      lname: formData.get('lname'),
-      nic: formData.get('nic'),
-      address: formData.get('address'),
+      fname: formData1.get('fname'),
+      lname: formData1.get('lname'),
+      nic: formData1.get('nic'),
+      address: formData1.get('address'),
     };
-    const response = await submitApplication(data);
+    submitApplication(data);
   };
 
   return (
@@ -24,10 +42,10 @@ export default function Application() {
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <Grid container spacing={1}>
             <Grid item md={6} xs={12}>
-              <TextField label="First Name" name="fname" />
+              <TextField required label="First Name" name="fname" />
             </Grid>
             <Grid item md={6} xs={12}>
-              <TextField label="Last Name" name="lname" />
+              <TextField required label="Last Name" name="lname" />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -53,7 +71,7 @@ export default function Application() {
               />
             </Grid>
             <Grid item xs={12}>
-              <p>Please upload proof for address</p>
+              <p>{imageName}</p>
               <Button
                 variant="outlined"
                 component="label"
@@ -61,7 +79,16 @@ export default function Application() {
                 style={{ float: 'right' }}
               >
                 Upload
-                <input hidden accept="image/*" multiple type="file" />
+                <input
+                  hidden
+                  accept="image/*"
+                  multiple
+                  type="file"
+                  onChange={(event) => {
+                    setImageSelected(event.target.files[0]);
+                    setImageName(event.target.files[0].name);
+                  }}
+                />
               </Button>
             </Grid>
           </Grid>
@@ -70,6 +97,7 @@ export default function Application() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={uploadImage}
           >
             submit
           </Button>
