@@ -17,6 +17,7 @@ export const submitApplication = async (data) => {
       id_number: data.nic,
       address: data.address,
       // proof_image_url: data.
+      user_email: data.email,
     },
   };
 

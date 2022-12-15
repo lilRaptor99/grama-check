@@ -5,11 +5,15 @@ import TextField from '@mui/material/TextField';
 import { Container, Grid, Box } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 import { submitApplication } from '../services/application.js';
+import { useAuthContext } from '@asgardeo/auth-react';
 import Axios from 'axios';
 
 export default function Application() {
   const [imageSelected, setImageSelected] = useState();
+  const [email, setEmail] = useState();
   const [imageName, setImageName] = useState('Please upload proof for address');
+
+  const { getDecodedIDToken } = useAuthContext();
 
   const uploadImage = (files) => {
     const formData = new FormData();
@@ -27,13 +31,22 @@ export default function Application() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData1 = new FormData(event.currentTarget);
-    const data = {
-      fname: formData1.get('fname'),
-      lname: formData1.get('lname'),
-      nic: formData1.get('nic'),
-      address: formData1.get('address'),
-    };
-    submitApplication(data);
+
+    getDecodedIDToken()
+      .then((idToken) => {
+        setEmail(idToken.username);
+        const data = {
+          fname: formData1.get('fname'),
+          lname: formData1.get('lname'),
+          nic: formData1.get('nic'),
+          address: formData1.get('address'),
+          email: email,
+        };
+        submitApplication(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
