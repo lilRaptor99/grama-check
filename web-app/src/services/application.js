@@ -16,7 +16,7 @@ export const submitApplication = async (data) => {
       last_name: data.lname,
       id_number: data.nic,
       address: data.address,
-      // proof_image_url: data.
+      proof_image_url: data.url,
       user_email: data.email,
     },
   };
@@ -25,6 +25,22 @@ export const submitApplication = async (data) => {
     const response = await axios(config);
     console.log(response);
     return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const generateImageLink = async (formData) => {
+  // console.log(data);
+  const config = {
+    method: 'post',
+    url: 'https://api.cloudinary.com/v1_1/dfgk4vgol/image/upload',
+    data: formData,
+  };
+
+  try {
+    const response = await axios(config);
+    return response.data.secure_url;
   } catch (error) {
     console.error(error);
   }

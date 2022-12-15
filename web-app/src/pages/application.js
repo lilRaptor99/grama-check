@@ -6,41 +6,46 @@ import { Container, Grid, Box } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 import { submitApplication } from '../services/application.js';
 import { useAuthContext } from '@asgardeo/auth-react';
-import Axios from 'axios';
+import { generateImageLink } from '../services/application';
 
 export default function Application() {
   const [imageSelected, setImageSelected] = useState();
   const [email, setEmail] = useState();
+  const [imgUrl, setImgUrl] = useState(null);
+
   const [imageName, setImageName] = useState('Please upload proof for address');
 
   const { getDecodedIDToken } = useAuthContext();
 
-  const uploadImage = (files) => {
-    const formData = new FormData();
-    formData.append('file', imageSelected);
-    formData.append('upload_preset', 'h3puqjru');
+  // const uploadImage = async () => {
 
-    Axios.post(
-      'https://api.cloudinary.com/v1_1/dfgk4vgol/image/upload',
-      formData
-    ).then((response) => {
-      console.log(response);
-    });
-  };
+  //   if (url) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData1 = new FormData(event.currentTarget);
+    const formData = new FormData(event.currentTarget);
+
+    // const formData = new FormData();
+    formData.append('file', imageSelected);
+    formData.append('upload_preset', 'h3puqjru');
+
+    const url = await generateImageLink(formData);
+    setImgUrl(url);
 
     getDecodedIDToken()
       .then((idToken) => {
         setEmail(idToken.username);
         const data = {
-          fname: formData1.get('fname'),
-          lname: formData1.get('lname'),
-          nic: formData1.get('nic'),
-          address: formData1.get('address'),
+          fname: formData.get('fname'),
+          lname: formData.get('lname'),
+          nic: formData.get('nic'),
+          address: formData.get('address'),
           email: email,
+          url: imgUrl,
         };
         submitApplication(data);
       })
@@ -110,7 +115,7 @@ export default function Application() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={uploadImage}
+            //onClick={uploadImage}
           >
             submit
           </Button>
