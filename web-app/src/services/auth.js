@@ -1,11 +1,5 @@
-// import { useAuthContext } from "@asgardeo/auth-react";
 import axios from 'axios';
 import qs from 'qs';
-
-// export const handleLogin = () => {
-//     const { state, signIn, signOut } = useAuthContext();
-//     signIn();
-// }
 
 export const handleTokenExchange = (idToken) => {
   const data = qs.stringify({

@@ -4,7 +4,6 @@ const api = process.env.REACT_APP_GRAMA_INTEGRATOR;
 
 export const submitApplication = async (data) => {
   const accessToken = await localStorage.getItem('access-token');
-  console.log(data);
   const config = {
     method: 'post',
     url: `${api}/policeReport`,
@@ -23,15 +22,13 @@ export const submitApplication = async (data) => {
 
   try {
     const response = await axios(config);
-    console.log(response);
-    return response.data;
+    return response;
   } catch (error) {
     console.error(error);
   }
 };
 
 export const generateImageLink = async (formData) => {
-  // console.log(data);
   const config = {
     method: 'post',
     url: 'https://api.cloudinary.com/v1_1/dfgk4vgol/image/upload',
