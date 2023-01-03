@@ -2,7 +2,7 @@ import * as React from 'react';
 import PendingImg from '../assets/images/Pending.png';
 import { Container, Row } from 'react-bootstrap';
 
-export default function CheckStatus() {
+const CheckStatus = () => {
   return (
     <Container className="check-status mt-3">
       <Row className="justify-content-center">
@@ -18,4 +18,6 @@ export default function CheckStatus() {
       </Row>
     </Container>
   );
-}
+};
+
+export default CheckStatus;
