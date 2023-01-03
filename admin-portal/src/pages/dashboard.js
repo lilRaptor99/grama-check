@@ -43,7 +43,31 @@ const Dashboard = () => {
 
   const fetchDetails = async () => {
     const results = await getAllPoliceRecords();
-    console.log(results);
+    results.forEach((app) => {
+      if (
+        app.id_check_status === 'REJECTED' ||
+        app.police_check_status === 'REJECTED'
+      ) {
+        app.appstatus = 'REJECTED';
+      } else if (
+        app.id_check_status === 'APPROVED' ||
+        app.police_check_status === 'REJECTED'
+      ) {
+        app.appstatus = 'REJECTED';
+      } else if (
+        (app.id_check_status === 'APPROVED' ||
+          app.police_check_status === 'APPROVED') &&
+        app.address_check_status === 'PENDING'
+      ) {
+        app.appstatus = 'PENDING';
+      } else if (
+        (app.id_check_status === 'APPROVED' ||
+          app.police_check_status === 'APPROVED') &&
+        app.address_check_status === 'APPROVED'
+      ) {
+        app.appstatus = 'APPROVED';
+      }
+    });
     setPoliceReports(results);
   };
 
@@ -76,11 +100,7 @@ const Dashboard = () => {
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
+                    <TableCell key={column.id} align={column.align}>
                       {column.label}
                     </TableCell>
                   ))}
@@ -103,11 +123,27 @@ const Dashboard = () => {
                             <TableCell key={column.id} align={column.align}>
                               {column.id === 'action' ? (
                                 <div>
-                                  <CancelIcon color="error" />{' '}
+                                  <CancelIcon color="error" />
                                   <CheckCircleIcon color="success" />
                                 </div>
                               ) : column.format && typeof value === 'number' ? (
                                 column.format(value)
+                              ) : column.id === 'appstatus' ? (
+                                value === 'REJECTED' ? (
+                                  <p style={{ color: '#d32f2f' }}>{value}</p>
+                                ) : value === 'APPROVED' ? (
+                                  <p style={{ color: '#2e7d32' }}>{value}</p>
+                                ) : (
+                                  <p style={{ color: '#1E88E5' }}>{value}</p>
+                                )
+                              ) : column.id === 'proof_image_url' ? (
+                                <a
+                                  href={value}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  Click here to view
+                                </a>
                               ) : (
                                 value
                               )}
