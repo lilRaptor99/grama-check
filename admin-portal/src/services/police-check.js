@@ -20,3 +20,23 @@ export const getAllPoliceRecords = async () => {
     console.error(error);
   }
 };
+
+export const acceptReport = async (reportId) => {
+  const accessToken = await localStorage.getItem('access-token');
+  console.log(reportId);
+  const config = {
+    method: 'post',
+    url: `${api}/acceptReport/${reportId}`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    data: {},
+  };
+
+  try {
+    const response = await axios(config);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};

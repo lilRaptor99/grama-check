@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { handleTokenExchange } from '../services/auth';
 import { useAuthContext } from '@asgardeo/auth-react';
-import { getAllPoliceRecords } from '../services/police-check';
+import { acceptReport, getAllPoliceRecords } from '../services/police-check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
@@ -40,6 +40,10 @@ const Dashboard = () => {
   };
 
   const { state, getIDToken } = useAuthContext();
+
+  const approveApplication = async (id) => {
+    await acceptReport(id);
+  };
 
   const fetchDetails = async () => {
     const results = await getAllPoliceRecords();
@@ -124,7 +128,12 @@ const Dashboard = () => {
                               {column.id === 'action' ? (
                                 <div>
                                   <CancelIcon color="error" />
-                                  <CheckCircleIcon color="success" />
+                                  <CheckCircleIcon
+                                    color="success"
+                                    onClick={() => {
+                                      approveApplication(row.police_report_id);
+                                    }}
+                                  />
                                 </div>
                               ) : column.format && typeof value === 'number' ? (
                                 column.format(value)
