@@ -42,3 +42,24 @@ export const generateImageLink = async (formData) => {
     console.error(error);
   }
 };
+
+export const getApplicationStatus = async (email) => {
+  const accessToken = await localStorage.getItem('access-token');
+
+  console.log(email);
+
+  const config = {
+    method: 'get',
+    url: `${api}/policeReport/${email}`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  try {
+    const response = await axios(config);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
