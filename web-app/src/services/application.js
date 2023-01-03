@@ -4,7 +4,6 @@ const api = process.env.REACT_APP_GRAMA_INTEGRATOR;
 
 export const submitApplication = async (data) => {
   const accessToken = await localStorage.getItem('access-token');
-  console.log(data);
   const config = {
     method: 'post',
     url: `${api}/policeReport`,
@@ -23,15 +22,13 @@ export const submitApplication = async (data) => {
 
   try {
     const response = await axios(config);
-    console.log(response);
-    return response.data;
+    return response;
   } catch (error) {
     console.error(error);
   }
 };
 
 export const generateImageLink = async (formData) => {
-  // console.log(data);
   const config = {
     method: 'post',
     url: 'https://api.cloudinary.com/v1_1/dfgk4vgol/image/upload',
@@ -41,6 +38,27 @@ export const generateImageLink = async (formData) => {
   try {
     const response = await axios(config);
     return response.data.secure_url;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getApplicationStatus = async (email) => {
+  const accessToken = await localStorage.getItem('access-token');
+
+  console.log(email);
+
+  const config = {
+    method: 'get',
+    url: `${api}/policeReport/${email}`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  try {
+    const response = await axios(config);
+    return response.data;
   } catch (error) {
     console.error(error);
   }

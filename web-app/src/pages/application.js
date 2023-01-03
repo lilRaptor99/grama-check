@@ -17,19 +17,10 @@ export default function Application() {
 
   const { getDecodedIDToken } = useAuthContext();
 
-  // const uploadImage = async () => {
-
-  //   if (url) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
-    // const formData = new FormData();
     formData.append('file', imageSelected);
     formData.append('upload_preset', 'h3puqjru');
 
@@ -39,19 +30,23 @@ export default function Application() {
     getDecodedIDToken()
       .then((idToken) => {
         setEmail(idToken.username);
-        const data = {
-          fname: formData.get('fname'),
-          lname: formData.get('lname'),
-          nic: formData.get('nic'),
-          address: formData.get('address'),
-          email: email,
-          url: imgUrl,
-        };
-        submitApplication(data);
       })
       .catch((error) => {
         console.log(error);
       });
+
+    const data = {
+      fname: formData.get('fname'),
+      lname: formData.get('lname'),
+      nic: formData.get('nic'),
+      address: formData.get('address'),
+      email: email,
+      url: imgUrl,
+    };
+    const response = await submitApplication(data);
+    if (response.status === 200) {
+      window.location.replace('https://localhost:3000');
+    }
   };
 
   return (
